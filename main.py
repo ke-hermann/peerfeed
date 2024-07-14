@@ -26,7 +26,7 @@ class ListModel(QAbstractListModel):
             return None
         item = self._items[index.row()]
         if role == ListModel.TitleRole:
-            return item.text
+            return item.title
         elif role == ListModel.DescriptionRole:
             return item.description
         elif role == ListModel.ImageRole:

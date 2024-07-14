@@ -28,6 +28,16 @@ ApplicationWindow {
             delegate: Item {
                 width: ListView.view.width
                 height: 100
+
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    radius: 5
+                    border.color: "black"
+                    border.width: 5
+                    color: "white"
+                }
+
                 Column {
                     spacing: 10
                     Image {
@@ -37,8 +47,12 @@ ApplicationWindow {
                         fillMode: Image.PreserveAspectCrop
                     }
                     Text {
-                        text: description
+                        width: parent.width
+                        text: title
+                        font.bold: true
                         horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
