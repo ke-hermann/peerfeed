@@ -1,10 +1,10 @@
 from pathlib import Path
 import peewee as pw
-
+from custom_types import FeedEntry
 
 DB_PATH = Path.home() / ".peerfeed.db"
 
-db = pw.SqliteDatabase(DB_PATH)
+database = pw.SqliteDatabase(DB_PATH)
 
 
 # Define the model for the table
@@ -15,9 +15,24 @@ class Entries(pw.Model):
     url = pw.CharField()
 
     class Meta:
-        database = db  # This model uses the "example.db" database
+        database = database  # This model uses the "example.db" database
 
 
 def create_database():
-    db.connect()
-    db.create_tables([Entries])
+    with database:
+        database.create_tables([Entries])
+
+# Function to insert a new entry into the database
+def insert_new_entry(entry: FeedEntry):
+    with database:
+        new_entry = Entries.create(
+            title= entry.title,
+            description= entry.description,
+            thumbnail= entry.thumbnail,
+            url= entry.url
+        )
+    return new_entry
+
+
+if __name__ == "__main__":
+    create_database()
