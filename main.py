@@ -1,12 +1,13 @@
 # This Python file uses the following encoding: utf-8
 import sys
 from pathlib import Path
-from extract import generate_list_item
 
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
-from PySide6.QtCore import Qt, QAbstractListModel, QModelIndex
+import database
+from custom_types import ListItem
 
 
 class ListModel(QAbstractListModel):
@@ -50,12 +51,12 @@ if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
 
+    data = database.fetch_all_entries()
     model = ListModel()
-    model.addItem(
-        generate_list_item(
-            "https://www.rockpapershotgun.com/nine-sols-review?utm_source=pocket_shared"
-        )
-    )
+
+    for d in data:
+        model.addItem(ListItem(d.title, d.description, d.thumbnail))
+
 
     context = engine.rootContext()
     context.setContextProperty("listModel", model)

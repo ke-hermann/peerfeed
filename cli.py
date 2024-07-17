@@ -15,7 +15,6 @@ def main():
     if args.url:
         entry = extract.generate_feed_entry(args.url)
         database.insert_new_entry(entry)
-        print(entry)
 
 
 if __name__ == "__main__":

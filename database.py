@@ -1,6 +1,7 @@
 from pathlib import Path
 import peewee as pw
 from custom_types import FeedEntry
+from typing import Iterator
 
 DB_PATH = Path.home() / ".peerfeed.db"
 
@@ -33,6 +34,9 @@ def insert_new_entry(entry: FeedEntry):
         )
     return new_entry
 
+def fetch_all_entries() -> Iterator[FeedEntry]:
+    for entry in Entries.select():
+        yield entry
 
 if __name__ == "__main__":
     create_database()
